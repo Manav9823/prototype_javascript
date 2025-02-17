@@ -107,3 +107,40 @@ console.log(typeof user) // Object
 // Example 6
 
 // class UserCrea
+
+
+
+
+
+Array.prototype.myMap = function(callback){
+    let result = []
+    for(let i = 0; i < this.length; i++){
+        result.push(callback(this[i]))
+    }
+    return result
+}
+
+let array = [1, 2, 3, 4]
+// const result = array.myMap((num) => num * 2)
+// console.log(result)
+
+
+Array.prototype.myFilter = function(callback){
+    let result = []
+    this.forEach((num) => {
+        if(callback(this[num]) === true)  result.push(this[num])
+    })
+    return result
+}
+
+const result = array.myFilter((num) => num % 2 === 0)
+console.log(result)
+
+Array.prototype.myReduce = function(callback, intialValue) {
+    let accumulator = intialValue !== undefined ? intialValue : this[0]
+    let startIndex = intialValue !== undefined ? 0 : 1
+    for(let i = startIndex; i < this.length; i++) {
+        accumulator = callback(accumulator, this[i], this)
+    }
+    return accumulator
+}
