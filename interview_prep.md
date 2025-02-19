@@ -1,3 +1,4 @@
+(https://chatgpt.com/c/67b30b9a-2558-8009-9c75-870781ea9deb)
 # HTML
 `HTML tags`: <b> </b>  
 `HTML elements`: consists of a start tag, content, and an end tag. <b>This is the content.</b>
@@ -827,8 +828,8 @@ Why should index not be used as key
 `Functional vs Class Components`
 Functional components are simple functions that accept props and return JSX. They are stateless and don't use a constructor or React lifecycle methods.
 
-Class components are ES6 classes that extend React.Component. They have a render method, can use state, a constructor, and React lifecycle methods. They are suitable for managing state and implementing more
-complex logic.
+Class components are ES6 classes that extend React.Component. They have a render method, can use state, a constructor, and React lifecycle methods. 
+They are suitable for managing state and implementing more complex logic.
 
 React Hooks
 React Hooks are built-in functions introduced in React version 16.8 that allow developers to utilize state and lifecycle methods within functional components.
@@ -843,17 +844,38 @@ Enables performing side effects in functional components, like data fetching or 
 Creates shared data accessible by components in a hierarchy without passing props through each level
 
 `useReducer`
+
 `useMemo`
 The useMemo hook in React is used for memoizing expensive calculations so that they are not unnecessarily recomputed on every render
+
+ # Memoizing expensive computation
+  const expensiveCalculation = useMemo(() => {
+    console.log("Running expensive calculation...");
+    return value * 1000;
+  }, [value]);
+
 `useCallback`
 The useCallback hook in React is used to memoize callback functions, similar to how useMemo is used to memoize values.
 It's particularly useful when passing callbacks to child components that rely on reference equality to avoid unnecessary re-renders.
+
+✅ When passing functions as props to child components
+✅ When a function is inside a useEffect dependency array
+✅ When dealing with event listeners or callbacks
 
 `useRef`
 The useRef is a hook that allows to directly create a reference to the DOM element in the functional component.
 Unlike useState if we change a value in useRef it will not re-render the webpage
 
 `Ref` Access and interact with DOM elements directly in react. They dont allow rerenders
+
+`React.memo`
+React.memo() is a higher-order component (HOC) that memoizes (caches) a component’s output
+and prevents unnecessary re-renders if the props remain the same.
+
+# How React.memo() Works
+When you wrap a component with React.memo(), React remembers the last rendered output of the component.
+If the component's props do not change, React reuses the previous render instead of rendering it again.
+
 
 `JSX`
     Syntatic sugar for react.createElement()
@@ -871,7 +893,8 @@ Unlike useState if we change a value in useRef it will not re-render the webpage
     Unmounting: Component is removed from DOM
 
 `Mounting` phase: 3 main lifecycle Methods
-componentWillMount(): The componentWillMount() lifecycle hook is primarily used to implement server-side logic before the actual rendering happens, such as making an API call to the server.
+componentWillMount(): The componentWillMount() lifecycle hook is primarily used to implement server-side logic
+before the actual rendering happens, such as making an API call to the server.
 
 Method is invoked right before component is rendered on the screen for the first time
 
@@ -901,8 +924,31 @@ Context provides a way to pass data through the component tree without having to
 
 In a typical React application, data is passed top-down (parent to child) via props, but such usage can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
 
+# Ref forwarding
+In React, ref forwarding allows a parent component to pass a ref down to a child component, 
+enabling direct manipulation of the child's DOM element or React component instance.
+
+
+`Why Use forwardRef?`
+1. Accessing child DOM elements (e.g., <input>, <button>).
+2. Passing refs through higher-order components (HOCs).
+3. Handling focus, animations, or measuring an element’s dimensions.
+
+
 # Error boundaries
 Error boundaries are a feature in React that allows you to catch JavaScript errors in the component tree, log those errors, and display a fallback UI instead of crashing the whole application.
+
+🎯 1. What Are Error Boundaries?
+🔹 In React, if an error occurs in a component, it crashes the entire app by default.
+🔹 Error Boundaries are special React components that catch JavaScript errors inside their child components and display a fallback UI instead of breaking the whole app.
+
+🔥 2. When Should You Use Error Boundaries?
+To catch errors in a specific part of the UI.
+To prevent an entire page from crashing.
+To log errors to an external service like Sentry.
+To provide a user-friendly fallback UI (e.g., "Something went wrong! Please try again.")
+
+Examples for Error Boundaries(https://chatgpt.com/c/67b30b9a-2558-8009-9c75-870781ea9deb)
 
 `Redux`
 
@@ -931,8 +977,9 @@ Without windowing, React has to write your entire list to the DOM before one lis
 
 
 # React Router
-# refforwarding, examples of useRef, useCallback, useMemo, portals,
+# portals,
 # concurrent react
+
 
 # Redux
 
@@ -1240,6 +1287,53 @@ The reason is that Node.js modules are encapsulated, which means each module has
 What we've learned so far with require and module.exports is called CommonJS Modules or CJS. This is the traditional module system used in Node.js. But there's another module system called ES Modules (or ESM, mjs), which is the standard for JavaScript modules in modern web development.
 
 To use ES Modules in Node.js, you need to set your project to use modules. Create a package.json file and include "type": "module" in it. This tells Node.js to use the ES Module system for your project.
+
+# There are two major differences between these two module systems that areimportant to note:
+
+1. Synchronous vs. Asynchronous: CommonJS requires modules in a
+synchronous manner, meaning the next line of code will execute only after the
+module has been loaded. In contrast, ES modules load modules
+asynchronously, allowing for more efficient and flexible code execution. This
+distinction is a powerful feature and an important point to remember for
+interviews.
+
+2. Strict Mode: Another significant difference is that CommonJS code runs in
+non-strict mode, while ES modules execute in strict mode. This means that ES
+modules enforce stricter parsing and error handling, making them generally
+safer and more reliable
+
+While using commonJS module no strict checking example:
+
+let x = "hello"
+z="bye" // no error thrown as no strict mode implemented
+
+While using ESM strict checking example
+
+let x = "hello"
+let z = "bye" // Error as z is not defined
+
+# What is module.exports: 
+Its an empty object
+
+# Require statement how it works
+
+`Resolving the Module`
+1. Node.js first determines the path of the module. It checks whether the path is a local file (./local ), a JSON file (.json ), or a module from the 
+node_modules directory, among other possibilities.
+2.` Loading the Module`
+Once the path is resolved, Node.js loads the file content based on its type. The loading process varies depending on whether the file is JavaScript,
+JSON, or another type.
+3. `Wrapping Inside an IIFE`
+ The module code is wrapped in an Immediately Invoked Function 
+Expression IIFE. This wrapping helps encapsulate the module's scope, 
+keeping variables and functions private to the module.
+4. `Code Evaluation and Module Exports`
+After wrapping, Node.js evaluates the moduleʼs code. During this 
+evaluation, module.exports is set to export the module's functionality or data. This step essentially makes the module's exports available to other files.
+5. `Caching(very imp)`
+Importance: Caching is crucial for performance. Node.js caches the result of the require() call so that the module is only loaded and executed once.
+
+# Global Execution Context, Memory creation Phase, Code Execution Phase, Libuv(async code) Notes episode 7 stored in 
 
 
 # MongoDB
