@@ -1,4 +1,4 @@
-(https://chatgpt.com/c/67b30b9a-2558-8009-9c75-870781ea9deb)
+
 # HTML
 `HTML tags`: <b> </b>  
 `HTML elements`: consists of a start tag, content, and an end tag. <b>This is the content.</b>
@@ -586,17 +586,26 @@ const firstResult = getNumbers();
 const secondResult = getNumbers();
 console.log(firstResult === secondResult); // false 
 
+# Event propogation
+Event propagation in JavaScript describes how events flow through the DOM (Document Object Model). 
+When you click a button inside a div, that event doesn’t just stay on the button—it moves through its ancestor elements.
+
+It has three phases:
+
+Capturing Phase (Trickle Down)
+Target Phase
+Bubbling Phase (Trickle Up)
+
+`event capturing`: the process of propagating from the farthest element to the closest 
+element in the DOM is called event capturing. 
+
+`event bubling`: The process of propagating from the closest element to the farthest away 
+element in the DOM (Document Object Modal) is called event bubbling.
 
 `Event binding` is a concept in JavaScript that allows you to attach event listeners to DOM elements so that specific
 functions (event handlers) are executed when a particular event occurs 
 (e.g., clicking a button, hovering over an element, pressing a key). 
 Event binding is crucial for creating interactive web applications.
-
-`event bubling`: The process of propagating from the closest element to the farthest away 
-element in the DOM (Document Object Modal) is called event bubbling.
-
-`event capturing`: the process of propagating from the farthest element to the closest 
-element in the DOM is called event capturing. 
 
 `e.stopPropogation()` to end event capturing and bubling
 
@@ -604,11 +613,30 @@ Document → HTML → Body → Parent Element → Target Element (`Capturing`)
 Target Element (Event Handling)
 Target Element → Parent Element → Body → HTML → Document (`Bubbling`)
 
-Order of Execution(If both phases are enabled, capturing phase needs to be enabled but the bubbling is by default):
+Order of Execution(If both phases are enabled, capturing phase needs to be enabled but the bubbling is by default:
 
 Capturing Phase happens first.
 Target Phase is when the event is handled by the target element itself.
 Bubbling Phase happens last, after the target phase, as the event bubbles back up.
+
+document.getElementById('#grandparent').addEventListener('click', ()=>{
+    console.log('grandparentClicked')
+})
+document.getElementById('#parent').addEventListener('click', ()=>{
+    console.log('parent')
+})
+document.getElementById('#child').addEventListener('click', ()=>{
+    console.log('child')
+})
+
+Event Capturing (When you click on the child div it prints child-> parent-> grandparent)
+You can pass a third argument in here useCapture and set it to true by default its false
+if its true output(grandparent -> parent -> child)
+
+# event delegation
+
+there are multiple child divs inside the parent div so instead of adding onclick events on each and every div just adding a onClick on parent div
+would help and its because of event bubbling 
 
 # Javascript-refrences(https://daveceddia.com/javascript-references/)
 
@@ -656,6 +684,8 @@ forEach: Cannot be chained directly because it returns undefined.
 # Generator function
 
 In JavaScript, a generator is a special type of function that can pause its execution and later resume from where it left off. This is achieved using the function* syntax to define a generator function and the yield keyword to pause and resume execution.
+
+# currying
 
 
 `block scope`
@@ -745,7 +775,7 @@ const result = array.myMap((num) => num * 2)
 `console.log(result)`
 
 
-# React 
+# React ((https://chatgpt.com/c/67b30b9a-2558-8009-9c75-870781ea9deb))
 # code Splitting(https://dev.to/franklin030601/code-splitting-in-react-js-4o2g)
 
 Major features of react
@@ -968,7 +998,7 @@ If there is one thing known for being expensive when it comes to developing web 
 
 The libraries we’ll discuss in this article help manipulate the DOM in a more effective way when rendering an extensive list of items. They work with the premise that items in a list that are not currently being shown to the user don’t need to exist in the DOM just yet.
 
-List virtualization, or windowing, is a technique for improving the performance of rendering long lists by only writing the visible portion of the list to the DOM.
+List virtualization, or windowing, is a technique for improving the performance of rendering long lists by only writing the visible portion of the list to the DOM. 
 
 This works by having a small window element moving over a bigger container, which will host the items, but will only render the items that are currently visible to the user through that window. A few other items in the list, which are outside the limits of the window but are close to the upper and lower boundaries, might be rendered so that when they enter into the view, they will already be loaded into the page. This gives the user a more natural scrolling experience.
 
@@ -1333,7 +1363,11 @@ evaluation, module.exports is set to export the module's functionality or data. 
 5. `Caching(very imp)`
 Importance: Caching is crucial for performance. Node.js caches the result of the require() call so that the module is only loaded and executed once.
 
-# Global Execution Context, Memory creation Phase, Code Execution Phase, Libuv(async code) Notes episode 7 stored in 
+# episode 7 ---> Global Execution Context, Memory creation Phase, Code Execution Phase, Libuv(async code)
+
+# Episode 8 ---> Interpreter, Compiler, Parsing
+
+# Episode 9 ---> Event loop and how it works
 
 
 # MongoDB
@@ -1341,17 +1375,180 @@ Importance: Caching is crucial for performance. Node.js caches the result of the
 mongoimport --db salestest --collection listingAndReviews C:\MongoSH\listingsAndReviews.json
 mongoexport
 
+# How to connect in local using MongoDB compass installed
+mongoSH command
+use resturants
+
+
+# Queries
+
+
+Object: {
+  "address": {
+     "building": "1007",
+     "coord": [ -73.856077, 40.848447 ],
+     "street": "Morris Park Ave",
+     "zipcode": "10462"
+  },
+  "borough": "Bronx",
+  "cuisine": "Bakery",
+  "grades": [
+     { "date": { "$date": 1393804800000 }, "grade": "A", "score": 2 },
+     { "date": { "$date": 1378857600000 }, "grade": "A", "score": 6 },
+     { "date": { "$date": 1358985600000 }, "grade": "A", "score": 10 },
+     { "date": { "$date": 1322006400000 }, "grade": "A", "score": 9 },
+     { "date": { "$date": 1299715200000 }, "grade": "B", "score": 14 }
+  ],
+  "name": "Morris Park Bake Shop",
+  "restaurant_id": "30075445"
+}
+
+db.resturants.find().sort({name: 1})
+
+.find()----> to find all
+.find({}, {name:1}) ---> to only display specific property
+.find({}, {name:1, Id: 0}) ---> to only display specific property and exculde specific one
+.find({"borough:" "Bronx"}) ---> find on particular condition
+.find({"borough:" "Bronx"}).limit(5)
+.find({"borough:" "Bronx"}).skip(5).limit(5)
+.find({"grade": {"$elemMatch":{"score":{"$gte":90}}}}); ---> query to find the restaurants who achieved a score more than 90.
+.find({name: /ces$/},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1}); // having ces as last three letters
+.find({name: /^Wil/},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1}); // having wil as first three letters
+.find({name: /.*Reg.*/},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1}); // having wil as three letters somewhere in the name
+.find({"borough" :{$in :["Staten Island","Queens","Bronx","Brooklyn"]}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1}); // borough in Queens or Bronx or Broookyln
+.find({"borough" :{$nin :["Staten Island","Queens","Bronx","Brooklyn"]}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1}); // borough in Queens, Bronx, Broookyln
+.find({"grades.score":{$not:{$gt:90}}}, {grades: 1, id: 0, cuisines: 1})
+.find().sort({name: 1, borough:-1}) // sorted by name and for that same name borough is in descending order
+.find({"address.street":{$exists:true}}) // all the address contains street in it 
+.find({"grades.score": {$mod: [7,0]}}) // resturant score divded by 7 is 0
+.find({"name": {"$regex": "mon.*", "$options": i}}) // i here means it doesnt need to be case senstive Mon, mon, mOn all will be matched
+
+
+regex pattern
+mon.* ----> monday, mono, mongoose
+.*mon.* ----> demon, femong, etc
+^Wil ---> Wily, William
+ces$ ---> Acces, derces
+
+`$in vs $or`
+Use $in when checking for multiple values in the same field. like {grades.score: {$in:[3, 6]}} 
+Use $or when checking different fields or different conditions. like {$or: [{grades.score: 3}, {borough: "bronx"}]}
+
 
 `elemMatch`
 The $elemMatch operator is used to match a single element in an array that meets all specified conditions simultaneously. This means that $elemMatch does not look across multiple elements in the array; instead, it tries to find a single element that satisfies all conditions defined inside it.
+This is useful in situations when you need to match multiple criteria within the same array element.
 
-`$and`
+With $elemMatch, a single element in grades must match the condition (score > 90).
+Without $elemMatch, it finds documents where at least one element in grades meets the condition,
+but it does not require a single element to match all conditions together. like if there are mutliple conditions elemMatch would want each condition 
+to be true for a single array element.
+
 Example:
 When a condition like { "grades.grade": "A" } is used, MongoDB searches through the grades array within each document to see if there is at least one element where grade is "A".
 Similarly, { "grades.grade": "B" } checks if there is at least one element in the grades array with grade equal to "B".
 
 MongoDB does not require both conditions to be true for the same element within the array. Instead, it checks if there’s at least one grade: "A" anywhere in the grades array and at least one grade: "B" anywhere in the same array.
 If both conditions are satisfied anywhere within the grades array, the document is considered a match.
+
+
+`$and`
+
+db.restaurants.find({
+  $and: [
+    { "grades.score": { $gt: 70 } },
+    { "grades.score": { $lt: 90 } }
+  ]
+});
+
+db.resturants.find({
+    "grades.score": {$gt:70}, "grades.score": {$lt:90}
+})
+
+the second query without and operator will not work bcz you cant have two conditions on the same field using the 2 command  
+we need to use and operator for that. if there are mulitple conditions on different fields we can use any on the below command
+both are same
+
+db.resturants.find({$and:[{"grades.score": {$gt:90}}, {"address.coord": {$gt: -73.1431}}]})
+db.resturants.find({"grades.score": {$gt: 90}, "address.coord": {$gt: -73.1451}})
+
+`$unwind`
+
+{
+  $unwind: {
+    path: <field path>,
+    includeArrayIndex: <string>, // Optional
+    preserveNullAndEmptyArrays: <boolean> // Optional
+  }
+}
+
+`path`: A string representing the field path of the array you want to unwind. It must be prefixed with a $ to indicate referencing a field in the input document.
+`includeArrayIndex`: (Optional) A string representing the field name for the index of the array element. The output documents will include this field, with the value as the index of the element in the original array.
+`preserveNullAndEmptyArrays`: (Optional) A boolean value that determines whether to output a document for input documents that don’t have the specified path or have an empty array, null, or missing value. By default, these input documents are not included in the output.
+
+sales collection
+{
+  _id: 1,
+  item: "itemA",
+  orders: [
+    { quantity: 2, unitPrice: 10 },
+    { quantity: 3, unitPrice: 20 },
+    { quantity: 1, unitPrice: 15 }
+  ]
+}
+
+db.sales.aggregate([{$unwind: {path: "$orders"}}])
+
+Output of the above is:
+[
+  { _id: 1, item: 'itemA', orders: { quantity: 2, unitPrice: 10 } },
+  { _id: 1, item: 'itemA', orders: { quantity: 3, unitPrice: 20 } },
+  { _id: 1, item: 'itemA', orders: { quantity: 1, unitPrice: 15 } },
+];
+
+`$group`
+
+{
+  $group: {
+    _id: <expression>,
+    <field1>: { <accumulator1> : <expression1> },
+    ...
+  }
+}
+
+Here’s a quick breakdown of the components:
+
+_id: This field represents the criteria for grouping the documents. It can be a single field name or an expression that returns a value.
+<field1>: This is the name of the field you want to create in the resulting documents, which store the computed values from the group.
+<accumulator1>: This is one of the accumulators that MongoDB provides (e.g. $sum, $avg, $min, $max, $push, etc.). They specify the operation to perform on the grouped data.
+<expression1>: This is the field or expression that the $group operator applies to the specific accumulator.
+
+
+orders collection below
+[
+  { _id: 1, customer_id: 'C1', amount: 110 },
+  { _id: 2, customer_id: 'C2', amount: 150 },
+  { _id: 3, customer_id: 'C1', amount: 90 },
+  { _id: 4, customer_id: 'C3', amount: 200 },
+  { _id: 5, customer_id: 'C2', amount: 50 },
+];
+
+
+db.orders.aggregate([
+  {
+    $group: {
+      _id: '$customer_id',
+      total_spent: { $sum: '$amount' },
+    },
+  },
+]);
+
+[
+  { _id: 'C1', total_spent: 200 },
+  { _id: 'C2', total_spent: 200 },
+  { _id: 'C3', total_spent: 200 },
+];
+
 
 `Upsert`
 In MongoDB, an upsert operation is used to update a document if it exists or insert a new document if it does not exist
@@ -1368,9 +1565,13 @@ $elemMatch is stricter because it looks for a specific scenario within a single 
 `plugin`    
 `methods`
 
+// db.resturants.find({$or:[{name: /^will/}, {$and:[{cuisine: {$ne: "American}}, {cuisine: {$ne: "Italian"}}]}]})
+
+# Practice
+
+db.resturants.find({$or:[{name: /^will/}, {$and:[{cuisine: {$ne: "American}}, {cuisine: {$ne: "Italian"}}]}]})
+
 # Interview
-
-
 
 sdlc
 friend class oops

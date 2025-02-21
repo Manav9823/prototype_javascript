@@ -1,3 +1,4 @@
+const fs = require('fs')
 // https://www.youtube.com/watch?v=-N9tBvlO9Bo&ab_channel=RyanSchaul
 
 //Example 1
@@ -24,7 +25,7 @@
 
 // Example 2
 
-const arr = [1, 2]
+// const arr = [1, 2]
 
 // console.log(arr.join('')) // ab
 
@@ -67,19 +68,19 @@ const arr = [1, 2]
 // Example 4
 
 // constructor function
-function UserCreator(name, points) {
-    this.name = name
-    this.points = points
-}
+// function UserCreator(name, points) {
+//     this.name = name
+//     this.points = points
+// }
 
-UserCreator.prototype.add = function() {
-    this.points++
-}
+// UserCreator.prototype.add = function() {
+//     this.points++
+// }
 
 
-const user = new UserCreator('manav', 4) // making a new object
-user.add()
-console.log(user.points)
+// const user = new UserCreator('manav', 4) // making a new object
+// user.add()
+// console.log(user.points)
 
 /**
  * 
@@ -97,9 +98,9 @@ console.log(user.points)
 
 /**Confusion Check */
 
-console.log(user.__proto__ === UserCreator.prototype)
-console.log(user.constructor === UserCreator)
-console.log(typeof user) // Object
+// console.log(user.__proto__ === UserCreator.prototype)
+// console.log(user.constructor === UserCreator)
+// console.log(typeof user) // Object
 // console.log(typeof(typeof user.__proto__.constructor))
 
 
@@ -112,35 +113,120 @@ console.log(typeof user) // Object
 
 
 
-Array.prototype.myMap = function(callback){
-    let result = []
-    for(let i = 0; i < this.length; i++){
-        result.push(callback(this[i]))
-    }
-    return result
-}
 
-let array = [1, 2, 3, 4]
+
+// Array.prototype.myMap = function(callback){
+//     let result = []
+//     for(let i = 0; i < this.length; i++){
+//         result.push(callback(this[i]))
+//     }
+//     return result
+// }
+
+// let array = [1, 2, 3, 4]
 // const result = array.myMap((num) => num * 2)
 // console.log(result)
 
 
-Array.prototype.myFilter = function(callback){
-    let result = []
-    this.forEach((num) => {
-        if(callback(this[num]) === true)  result.push(this[num])
-    })
-    return result
-}
+// Array.prototype.myFilter = function(callback){
+//     let result = []
+//     this.forEach((num) => {
+//         if(callback(this[num]) === true)  result.push(this[num])
+//     })
+//     return result
+// }
 
-const result = array.myFilter((num) => num % 2 === 0)
-console.log(result)
+// const result = array.myFilter((num) => num % 2 === 0)
+// console.log(result)
 
-Array.prototype.myReduce = function(callback, intialValue) {
-    let accumulator = intialValue !== undefined ? intialValue : this[0]
-    let startIndex = intialValue !== undefined ? 0 : 1
-    for(let i = startIndex; i < this.length; i++) {
-        accumulator = callback(accumulator, this[i], this)
-    }
-    return accumulator
-}
+// Array.prototype.myReduce = function(callback, intialValue) {
+//     let accumulator = intialValue !== undefined ? intialValue : this[0]
+//     let startIndex = intialValue !== undefined ? 0 : 1
+//     for(let i = startIndex; i < this.length; i++) {
+//         accumulator = callback(accumulator, this[i], this)
+//     }
+//     return accumulator
+// }
+
+
+// Event loop examples
+
+
+
+// setImmediate(() => {console.log('set Immediate 1')})
+
+// setTimeout(() => {console.log("set timeout 1")}, 0)
+
+// Promise.resolve("promise").then(console.log('promise 1 '))
+// Promise.resolve("promise 2")
+// .then(() => {
+//     console.log('promise new')
+// })
+
+// fs.readFile('./file.txt', 'utf-8' ,() => {
+//     setTimeout(() => {
+//             console.log('set timeout 2')
+//     }, 0);
+//     process.nextTick(() => console.log('process.next tick 2 read'))
+//     setImmediate(() => {console.log('set immediate 2')})
+//     console.log('utf 8 file format read')
+// })
+
+// process.nextTick(() => console.log('process.next tick 1 read'))
+// console.log('hello from the superstar')
+
+
+
+/************************************************************************JAVASCRIPT PRACTICE EXAMPLES**************************************************************/
+
+// function abc() {
+//     console.log(abc.xyz)
+// }
+
+// abc()
+// abc.xyz = 400
+// abc.xyz = 200
+// abc()
+
+
+// console.log(parseInt('10+2'))
+// console.log(parseInt('7FM'))
+// console.log(parseInt('FM7'))
+// console.log(parseInt('7'))
+// console.log([1, 2].map((num) => {
+//     if(num > 0) return ;
+//     else return num * 2;
+// }))
+
+// {
+//     function abc(){
+//         console.log('mamav')
+//     }   
+// }
+
+// abc()
+
+// function a(){
+//     return 1
+// }
+// function b(){
+//     return 2
+// }
+
+// const a = (a(), b()) // 2
+
+// const arr = ['one', 'two']
+// let str = 'Hello'
+
+// console.log(arr.includes('on')) // false
+// console.log(str.includes('ll')) // true
+
+// console.log(true == '') //false
+
+// let a = 10
+// let b = new Number(10)
+
+// console.log(a === b) // false as new Number creates a object and while comparing === it will compare data types also so it is false
+
+console.log(+true) // 1
+console.log(!"xyz") // false
